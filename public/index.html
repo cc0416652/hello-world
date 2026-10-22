@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的第一个 AI 开发的网站</title>
+  <style>
+    /* 页面整体样式：渐变背景 + 居中布局 */
+    body {
+      font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    /* 白色半透明卡片容器 */
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 45px 60px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      max-width: 720px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 0 0 24px 0;
+      line-height: 1.5;
+    }
+
+    .time {
+      font-size: 22px;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    #serverTime {
+      font-weight: bold;
+      border-bottom: 2px dashed rgba(255, 255, 255, 0.7);
+      padding-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 标题文字 -->
+    <h1>Hello World！我是【zhoudi】，我的第一个AI开发的网站</h1>
+
+    <!-- 服务器时间（由下方 JavaScript 每秒刷新） -->
+    <p class="time">服务器当前时间：<span id="serverTime">加载中...</span></p>
+  </div>
+
+  <script>
+    // 向服务器请求当前时间并显示在页面上
+    function getServerTime() {
+      fetch('/api/time')
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById('serverTime').textContent = data.time;
+        })
+        .catch(() => {
+          document.getElementById('serverTime').textContent = '获取时间失败，请确认服务器已启动';
+        });
+    }
+
+    getServerTime();                    // 页面加载后立即获取一次
+    setInterval(getServerTime, 1000);   // 之后每 1 秒刷新一次，始终显示最新服务器时间
+  </script>
+</body>
+</html>
